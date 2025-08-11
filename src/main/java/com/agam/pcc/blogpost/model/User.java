@@ -12,6 +12,7 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Table;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 
 @Entity 
@@ -30,8 +31,10 @@ public class User {
     private String username;
     private String email;
     private LocalDateTime createdAt;
+    private String password;
     @OneToMany (mappedBy = "user", cascade = CascadeType.ALL)
     @com.fasterxml.jackson.annotation.JsonManagedReference
+    @JsonIgnore
     private List<Blog> blogs = new ArrayList<>(); 
     
     //@OneToMany: This means one user can have many blogs.
@@ -88,6 +91,15 @@ public class User {
 
     public void setCreatedAt(LocalDateTime createdAt){
         this.createdAt = createdAt;
+    }
+
+    public String getPassword(){
+        return password;
+    }
+
+    public void setPassword(String password){
+        this.password = password;
+
     }
 
 }

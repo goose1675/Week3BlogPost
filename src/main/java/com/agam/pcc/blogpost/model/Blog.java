@@ -8,6 +8,7 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
+import jakarta.persistence.Column;
 
 @Entity //@Entity marks this class as a table in the database.
 public class Blog {
@@ -18,12 +19,15 @@ public class Blog {
     private Long id;
 
     private String title;
+    @Column(columnDefinition = "TEXT")
     private String content;
     private LocalDateTime createdAt;
+    private Long likes;
+    
 
     @ManyToOne //Many blogs can belong to one user.
 
-    @com.fasterxml.jackson.annotation.JsonBackReference
+    //@com.fasterxml.jackson.annotation.JsonBackReference
 
     @JoinColumn(name = "user_id")
     //@JoinColumn(name = "user_id"): This creates a foreign key column in the Blog table that links to the User table.
@@ -81,6 +85,14 @@ public class Blog {
 
     public void setCreatedAt(LocalDateTime createdAt){
         this.createdAt = createdAt;
+    }
+
+
+    public Long getLikes() {
+        return likes;
+    }
+    public void setLikes(Long likes) {
+        this.likes = likes;
     }
 
 }

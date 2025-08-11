@@ -1,4 +1,6 @@
 package com.agam.pcc.blogpost.service;
+import com.agam.pcc.blogpost.repository.UserRepository;
+import com.agam.pcc.blogpost.model.User;
 
 import com.agam.pcc.blogpost.model.Blog;
 import com.agam.pcc.blogpost.repository.BlogRepository;
@@ -18,10 +20,13 @@ public class BlogService {
     // They handle operations like adding, updating, or deleting blogs, while the Blog model defines the properties of a blog, such as title, content, and user.
 
     private final BlogRepository blogRepository;
+    private final UserRepository userRepository;
 
     //@Autowired
-    public BlogService(BlogRepository blogRepository) {
-        this.blogRepository = blogRepository;
+    public BlogService(BlogRepository blogRepository, UserRepository userRepository) {
+        this.blogRepository = blogRepository;                
+        this.userRepository = userRepository;
+
         // This constructor injects the BlogRepository dependency into the BlogService.
         // When an instance of BlogService is created, it will automatically receive an instance of BlogRepository.
         // This allows BlogService to perform operations on the Blog entity, such as saving, retrieving, and deleting blogs.
@@ -62,4 +67,20 @@ public class BlogService {
         return blogRepository.findByUserId(userId);
     }
     // This method retrieves all blogs written by a specific user based on their user ID.
+
+    public User findUserById(Long id) {
+        return userRepository.findById(id).orElse(null);
+    }
+
+    public Blog findBlogById(Long id) {
+        return blogRepository.findById(id).orElse(null);
+    }
+    public Blog likeBlog(Long id) {
+    Blog blog = findBlogById(id);
+    if (blog != null) {
+        blog.setLikes(blog.getLikes() == null ? 1 : blog.getLikes() + 1);
+        return updateBlog(id, blog);
+    }
+    return null;
+    }
 }

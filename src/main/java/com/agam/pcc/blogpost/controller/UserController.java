@@ -7,10 +7,12 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
+
+@CrossOrigin(origins = "*")
 @RestController
 // This annotation indicates that this class is a REST controller, which handles HTTP requests and responses.
 // It allows the class to handle requests at the specified URL path.
-@RequestMapping("/users")
+@RequestMapping("/api/users")
 // This annotation specifies the base URL path for all methods in this controller.
 // In this case, all user-related endpoints will start with "/users".
 // @RestController and @RequestMapping work together to define the URL structure for user-related operations.
@@ -30,7 +32,7 @@ public class UserController {
         return userService.addUser(user);
     }   
 
-    // Delete a user by ID
+    // Delete a user by ID  
     @DeleteMapping("/{id}")
     // This method handles DELETE requests to remove a user by their ID.
     // It uses the @PathVariable annotation to extract the user ID from the URL.    
